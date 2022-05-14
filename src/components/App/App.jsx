@@ -7,15 +7,18 @@ import { fetchData } from '../../services/imagesApi';
 import Loader from '../Loader/Loader';
 import Button from '../Button';
 import ImageGallery from '../ImageGallery/ImageGallery';
+import Modal from '../Modal/Modal';
 
 export default class App extends Component {
   state = {
     images: [],
+    title: '',
     loading: false,
     query: '',
     error: null,
     page: 1,
-    largeImageURL: null,
+    showModal: false,
+    largeImageURL: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -36,14 +39,26 @@ export default class App extends Component {
       query: query,
       page: 1,
       error: null,
+      title: '',
     });
   };
 
   onLoadMore = () => {
-    this.setState(({ page }) => ({
-      page: page + 1,
+    this.setState(state => ({
+      page: state.page + 1,
       loading: true,
     }));
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
+  onOpenModal = largeImageURL => {
+    this.setState({ largeImageURL });
+    this.toggleModal();
   };
 
   fetchImages = () => {
@@ -85,7 +100,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { images, loading, error, total } = this.state;
+    const { images, loading, error, total, showModal, largeImageURL, title } =
+      this.state;
 
     const nextImages = images.length !== 0;
     const isLastPage = images.length === total;
@@ -97,11 +113,15 @@ export default class App extends Component {
 
         {error && toast.error(error.message)}
 
-        <ImageGallery images={images} />
+        <ImageGallery images={images} onClick={this.onOpenModal} />
 
         {loading && <Loader />}
 
-        {loadMoreBtn && <Button onClick={this.fetchImages}>Load more</Button>}
+        {loadMoreBtn && <Button onClick={this.onLoadMore}>Load more</Button>}
+
+        {showModal && (
+          <Modal onClose={this.toggleModal} src={largeImageURL} alt={title} />
+        )}
 
         <ToastContainer theme="colored" position="top-right" autoClose={3000} />
       </>

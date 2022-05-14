@@ -1,9 +1,18 @@
 import { ItemLi, ItemImg } from './ImageGalleryItem.styled';
 import PropTypes from 'prop-types';
 
-const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => (
-  <ItemLi>
-    <ItemImg src={webformatURL} alt={tags} data-img={largeImageURL} />
+const ImageGalleryItem = ({
+  webformatURL,
+  largeImageURL,
+  tags,
+  onOpenModal,
+}) => (
+  <ItemLi
+    onClick={() => {
+      onOpenModal(largeImageURL);
+    }}
+  >
+    <ItemImg src={webformatURL} alt={tags} />
   </ItemLi>
 );
 
