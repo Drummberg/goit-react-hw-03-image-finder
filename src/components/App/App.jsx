@@ -33,7 +33,7 @@ export default class App extends Component {
     if (query === this.state.query) return;
     this.setState({
       images: [],
-      query,
+      query: query,
       page: 1,
       error: null,
     });
@@ -97,10 +97,12 @@ export default class App extends Component {
 
         {error && toast.error(error.message)}
 
+        <ImageGallery images={images} />
+
         {loading && <Loader />}
 
-        <ImageGallery images={images} />
         {loadMoreBtn && <Button onClick={this.fetchImages}>Load more</Button>}
+
         <ToastContainer theme="colored" position="top-right" autoClose={3000} />
       </>
     );
