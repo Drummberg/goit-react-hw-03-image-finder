@@ -113,11 +113,13 @@ export default class App extends Component {
 
         {error && toast.error(error.message)}
 
-        <ImageGallery images={images} onClick={this.onOpenModal} />
+        {nextImages && (
+          <ImageGallery images={images} onClick={this.onOpenModal} />
+        )}
 
         {loading && <Loader />}
 
-        {loadMoreBtn && <Button onClick={this.onLoadMore}>Load more</Button>}
+        {loadMoreBtn && <Button onClick={this.onLoadMore}></Button>}
 
         {showModal && (
           <Modal onClose={this.toggleModal} src={largeImageURL} alt={title} />

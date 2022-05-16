@@ -4,6 +4,7 @@ import { ButtonLoad } from './Button.styled';
 const Button = ({ children, onClick }) => {
   return (
     <ButtonLoad type="button" onClick={onClick}>
+      Load more
       {children}
     </ButtonLoad>
   );
