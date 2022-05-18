@@ -119,7 +119,7 @@ export default class App extends Component {
 
         {loading && <Loader />}
 
-        {loadMoreBtn && <Button onClick={this.onLoadMore}></Button>}
+        {loadMoreBtn && <Button onClick={this.onLoadMore} />}
 
         {showModal && (
           <Modal onClose={this.toggleModal} src={largeImageURL} alt={title} />
